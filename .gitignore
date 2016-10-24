@@ -1,0 +1,9 @@
+objs
+*.swp*
+*.o
+ccdv
+mkbiz
+dumpsym
+CompileFile.log
+build
+tags
