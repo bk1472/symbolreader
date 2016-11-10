@@ -36,7 +36,7 @@ size_t load_symbol(char symName[])
 	int				len    = 0;
 	int				nBytes = 0;
 
-	printf("Checking & Importing symbols from file %s\n", symName);
+	//printf("Checking & Importing symbols from file %s\n", symName);
 
 	fd = open(symName, O_RDONLY, 0777);
 
@@ -67,13 +67,13 @@ size_t load_symbol(char symName[])
 
 			if (*(unsigned int *)pSymStrBase == 0)
 			{
-				printf("16bit symbol Hash Mode\n");
+				//printf("16bit symbol Hash Mode\n");
 //				pSymHashBase = (unsigned short *)((unsigned int)pSymStrBase + 4);
 				pSymStrBase  = (char   *)(pSymHashBase + ((nTxtSyms + 1) & ~1));
 			}
 			else if (*(unsigned int *)pSymStrBase == 2)
 			{
-				printf("32bit symbol Hash Mode\n");
+				//printf("32bit symbol Hash Mode\n");
 				pSymHashBase = (unsigned int *)((unsigned int)pSymStrBase + 4);
 				pSymStrBase  = (char   *)(pSymHashBase + ((nTxtSyms + 1) & ~1));
 			}
@@ -86,14 +86,14 @@ size_t load_symbol(char symName[])
 				pSymStrBase	= pDwarfData + val2;;
 			}
 
-			printf("nTxtSyms     = %d\n", nTxtSyms);
-			printf("pSymTabBase  = [0x%06x..0x%06x)\n", pSymTabBase,  pSymTabBase + 3 * nTxtSyms);
-			printf("pSymHashBase = [0x%06x..0x%06x)\n", pSymHashBase, pSymHashBase + nTxtSyms);
-			printf("pSymStrBase  = [0x%06x..0x%06x)\n", pSymStrBase,  val9);
+			//printf("nTxtSyms     = %d\n", nTxtSyms);
+			//printf("pSymTabBase  = [0x%06x..0x%06x)\n", pSymTabBase,  pSymTabBase + 3 * nTxtSyms);
+			//printf("pSymHashBase = [0x%06x..0x%06x)\n", pSymHashBase, pSymHashBase + nTxtSyms);
+			//printf("pSymStrBase  = [0x%06x..0x%06x)\n", pSymStrBase,  val9);
 
-			printf("nDwarfLst    = %d\n", nDwarfLst);
-			printf("pDwarfLst    = [0x%06x..0x%06x)\n", dwarfLst, dwarfLst + 2 * nDwarfLst);
-			printf("pDwarfData   = [0x%06x..0x%06x)\n", pDwarfData, pDwarfData + val2);
+			//printf("nDwarfLst    = %d\n", nDwarfLst);
+			//printf("pDwarfLst    = [0x%06x..0x%06x)\n", dwarfLst, dwarfLst + 2 * nDwarfLst);
+			//printf("pDwarfData   = [0x%06x..0x%06x)\n", pDwarfData, pDwarfData + val2);
 		}
 	}
 
