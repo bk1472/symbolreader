@@ -31,7 +31,7 @@ int main (int argc, char **argv)
 		find_sym_byAddr(addr, &symbol);
 	}
 	lineNo = addr2line(addr, &file);
-	fprintf(stdout, "[pc:0x%08x, %s()@%s:%d]\n", addr, symbol, file, lineNo);
+	fprintf(stdout, "[pc:0x%08x, %s()@%s:%d]\n", addr, &symbol[1], file, lineNo);
 
 	return 0;
 }
