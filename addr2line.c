@@ -584,6 +584,8 @@ int addr2line(unsigned int addr, char **ppFileName)
 		tprint0n("Address is in dwarf packet %d, [%x .. %x]\n", x, pDwarf, pDwarf+size);
 		#endif
 		lineNo = searchLineInfo(&pDwarf, &size, addr, ppFileName);
+		if(lineNo > 0)
+			lineNo -= 1;
 		#if (DEBUG > 0)
 		tprint0n("%08x ==> %s:%d\n", addr, *ppFileName, lineNo);
 		#endif
