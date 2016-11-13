@@ -8,6 +8,7 @@ int main (int argc, char **argv)
 	char			*symbol = NULL;
 	char 			*file   = NULL;
 	int				lineNo  = 0;
+	char			*symBuf = NULL;
 
 	if (argc != 3)
 	{
@@ -16,25 +17,29 @@ int main (int argc, char **argv)
 	}
 	load_symbol(argv[1]);
 
-	if (argv[2][0] == '0' && argv[2][1] == 'x')
+	if ((addr=strtoll(argv[2], NULL, 16)) == 0) // input string is bot number
 	{
-		addr = strtoll(argv[2], NULL, 16);
-	}
+		int len = strlen(argv[2]);
 
-	if (addr == 0)
-	{
-		addr = find_sym_byName(argv[2]);
-		symbol = argv[2];
+		symBuf = (char*)malloc(len + 2);
+
+		symBuf[0] = '_';
+		strncpy(&symBuf[1], argv[2], len);
+
+		addr = find_sym_byName(symBuf);
+		symbol = symBuf;
 	}
 	else
 	{
 		find_sym_byAddr(addr, &symbol);
 	}
+
 	lineNo = addr2line(addr, &file);
 	if (symbol[0] == '_')
 		symbol = &symbol[1];
 
 	fprintf(stdout, "[pc:0x%08x, %s()@%s:%d]\n", addr, symbol, file, lineNo);
 
+	free(symBuf);
 	return 0;
 }
