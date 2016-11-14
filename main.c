@@ -44,7 +44,6 @@ int main (int argc, char **argv)
 	{
 		int len = strlen(argv[2]);
 
-		addr=strtoul(argv[2], NULL, 16);
 		symBuf = (char*)malloc(len + 2);
 
 		symBuf[0] = '_';
@@ -55,6 +54,7 @@ int main (int argc, char **argv)
 	}
 	else
 	{
+		addr=strtoul(argv[2], NULL, 16);
 		find_sym_byAddr(addr, &symbol);
 	}
 
