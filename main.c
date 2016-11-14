@@ -9,6 +9,8 @@ int main (int argc, char **argv)
 	char 			*file   = NULL;
 	int				lineNo  = 0;
 	char			*symBuf = NULL;
+	char			mod;
+	char			*chk;
 
 	if (argc != 3)
 	{
@@ -17,10 +19,32 @@ int main (int argc, char **argv)
 	}
 	load_symbol(argv[1]);
 
-	if ((addr=strtoll(argv[2], NULL, 16)) == 0) // input string is bot number
+	/*Digit check*/
+	chk = argv[2];
+	if (chk[0] == '0' &&(chk[1] == 'x' || chk[1] == 'X'))
+		mod = 'a';
+	else
+	{
+		mod = 'a';
+		for(;*chk != '\0'; chk++)
+		{
+			if (*chk >= '0' && *chk <= '9')
+				continue;
+			if (*chk >= 'a' && *chk <= 'f')
+				continue;
+			if (*chk >= 'A' && *chk <= 'F')
+				continue;
+			mod = 's';
+			break;
+		}
+	}
+
+
+	if (mod == 's')
 	{
 		int len = strlen(argv[2]);
 
+		addr=strtoul(argv[2], NULL, 16);
 		symBuf = (char*)malloc(len + 2);
 
 		symBuf[0] = '_';
@@ -31,6 +55,7 @@ int main (int argc, char **argv)
 	}
 	else
 	{
+		printf("addr:%x\n", addr);
 		find_sym_byAddr(addr, &symbol);
 	}
 
@@ -38,8 +63,10 @@ int main (int argc, char **argv)
 	if (symbol[0] == '_')
 		symbol = &symbol[1];
 
-	fprintf(stdout, "[pc:0x%08x, %s()@%s:%d]\n", addr, symbol, file, lineNo);
+	fprintf(stdout, "%c[pc:0x%08x, %s()@%s:%d]\n", mod, addr, symbol, file, lineNo);
 
-	free(symBuf);
+	if(symBuf)
+		free(symBuf);
+
 	return 0;
 }
