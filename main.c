@@ -55,7 +55,6 @@ int main (int argc, char **argv)
 	}
 	else
 	{
-		printf("addr:%x\n", addr);
 		find_sym_byAddr(addr, &symbol);
 	}
 
