@@ -2,6 +2,7 @@
 #include	"sym_process.h"
 #include	"util.h"
 
+char tmpBuf[1024];
 int main (int argc, char **argv)
 {
 	unsigned int	addr    = 0;
@@ -48,19 +49,31 @@ int main (int argc, char **argv)
 
 		symBuf[0] = '_';
 		strncpy(&symBuf[1], argv[2], len);
-
+		symBuf[len+1] = '\0';
 		addr = find_sym_byName(symBuf);
-		symbol = symBuf;
+		symbol = &symBuf[1];
 	}
 	else
 	{
+		int i = 0;
 		addr=strtoul(argv[2], NULL, 16);
 		find_sym_byAddr(addr, &symbol);
+		if (symbol[0] == '_')
+			symbol = &symbol[1];
+		strcpy(&tmpBuf[0], symbol);
+		symbol = &tmpBuf[0];
+		while(symbol[i] != '\0')
+		{
+			if (symbol[i] == '.') {
+				symbol[i] = '\0';
+				break;
+			}
+			i++;
+		}
+
 	}
 
 	lineNo = addr2line(addr, &file);
-	if (symbol[0] == '_')
-		symbol = &symbol[1];
 
 	fprintf(stdout, "%c[pc:0x%08x, %s()@%s:%d]\n", mod, addr, symbol, file, lineNo);
 

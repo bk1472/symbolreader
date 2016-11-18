@@ -175,12 +175,15 @@ unsigned int find_sym_byName(char *symName)
 {
 	int			x, l = 0, r = nTxtSyms-1, matched = 0, rc;
 	unsigned int		addr = 0;
+	int			len;
 	symEntry_t	*pSyms = (symEntry_t *)pSymTabBase;
+
+	len = strlen(symName);
 
 	do
 	{
 		x = (l + r) / 2;
-		rc = strcmp(symName, &pSymStrBase[pSyms[pSymHashBase[x]].ptr]);
+		rc = strncmp(symName, &pSymStrBase[pSyms[pSymHashBase[x]].ptr], len);
 		if      (rc < 0) { matched = 0; r = x - 1; }
 		else if (rc > 0) { matched = 0; l = x + 1; }
 		else             { matched = 1;            }
