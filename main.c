@@ -75,7 +75,7 @@ int main (int argc, char **argv)
 
 	lineNo = addr2line(addr, &file);
 
-	fprintf(stdout, "%c[pc:0x%08x, %s()@%s:%d]\n", mod, addr, symbol, file, lineNo);
+	fprintf(stdout, "[pc:0x%08x, %s()@%s:%d]\n", addr, symbol, file, lineNo);
 
 	if(symBuf)
 		free(symBuf);
