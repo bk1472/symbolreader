@@ -4,7 +4,8 @@ TOP_DIR		 = .
 include		$(TOP_DIR)/incs.mk
 
 
-TGT			 = $(BIN_DIR)/symbolreader
+APP_NAME	 = readsym
+TGT			 = $(BIN_DIR)/$(APP_NAME)
 
 SRCS		 =
 SRCS		+= main.c
@@ -18,5 +19,6 @@ SRCS		+= util.c
 OBJS		 = $(addprefix $(OBJ_DIR)/, $(notdir $(SRCS:.c=.o)))
 
 all : $(TGT)
+	@cp $(BIN_DIR)/$(APP_NAME) $(RELEASE_DIR)/$(APP_NAME)
 
 include		$(TOP_DIR)/rules.mk

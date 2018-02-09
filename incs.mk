@@ -3,14 +3,17 @@
 BUILD_DIR	 = $(TOP_DIR)/build
 OBJ_DIR		 = $(BUILD_DIR)/objs
 BIN_DIR		 = $(BUILD_DIR)/bin
+RELEASE_DIR	 = $(TOP_DIR)/..
 
 INC_DIR		 = $(TOP_DIR)/include
 SCRPT_DIR	 = $(TOP_DIR)/script
 
-ifeq ($(OSTYPE),cygwin)
-CC			 = x86_64-w64-mingw32-gcc
+BUILD_MACH	?= cygwin64
+
+ifeq ($(BUILD_MACH),cygwin64)
+CC			 = x86_64-w64-mingw32-gcc # cygwin64
 else
-CC			 = gcc
+CC			 = gcc                    # cygwin32 / linux
 endif
 
 CFLAGS		 =
